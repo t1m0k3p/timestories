@@ -1,0 +1,37 @@
+[
+  {
+    "scenario": "Madame",
+    "titleType": "Ziel",
+    "title": "Ludwig XIV",
+    "image": "images/goal.png",
+    "notes": "Sammelt den temporalen Abdruck von Ludwig XIV"
+  },
+  {
+    "scenario": "Madame",
+    "titleType": "Objekt",
+    "title": "8 (Taschentuch)",
+    "image": "images/object.png",
+    "notes": "Zeigt es Laure de Clerval's Vater in Paris"
+  },
+  {
+    "scenario": "Madame",
+    "titleType": "Ort",
+    "title": "Baustelle",
+    "image": "images/location.png",
+    "notes": "3x Fliege um Karte zu erkunden.\nUnter dem Wagen eingeklemmt -> Objekt 20"
+  },
+  {
+    "scenario": "Madame",
+    "titleType": "Ort",
+    "title": "Königshof",
+    "image": "images/location.png",
+    "notes": "Archivar mit Probe Verstand 3, falls Kreuzsymbol."
+  },
+  {
+    "scenario": "Madame",
+    "titleType": "Ort",
+    "title": "Orangerie",
+    "image": "images/location.png",
+    "notes": "Aufpasser Gift für 4 Geld verkaufen"
+  }
+]

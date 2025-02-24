@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>T.I.M.E Stories Notizen</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f8f9fa;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      .note-section {
+        margin-bottom: 30px;
+        padding: 20px;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .note-section h2 {
+        margin-top: 0;
+        font-size: 1.5em;
+        color: #555;
+      }
+      button {
+        display: inline-block;
+        padding: 10px 15px;
+        margin-top: 15px;
+        font-size: 1em;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      .output {
+        margin-top: 30px;
+        padding: 15px;
+        background-color: #f1f1f1;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .output h3 {
+        margin-top: 0;
+      }
+      .output p {
+        white-space: pre-wrap;
+      }
+      .status-marker-section {
+        margin-top: 20px;
+      }
+      .status-marker-section label {
+        font-weight: bold;
+      }
+      .marker-images {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .marker-images img {
+        width: 60px;
+        height: 60px;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .marker-images img.selected {
+        border-color: #007bff;
+      }
+      .status-marker-section textarea {
+        width: 100%;
+        height: 80px;
+        margin-top: 10px;
+        font-size: 1em;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: vertical;
+      }
+      .saved-note {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .saved-note img {
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+      }
+      .saved-note div {
+        flex-grow: 1;
+      }
+      .delete-button {
+        background-color: rgb(185, 175, 175);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+      .delete-button:hover {
+        background-color: gray;
+      }
+      .edit-button {
+        margin-left: auto;
+        background-color: #28a745;
+      }
+      .edit-button:hover {
+        background-color: #218838;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>T.I.M.E Stories Notizen</h1>
+    <div class="note-section">
+      <h2>Notizen für Szenario</h2>
+      <label for="scenario-name">Name des Szenarios:</label>
+      <select
+        id="scenario-name"
+        style="
+          width: 100%;
+          padding: 10px;
+          margin-top: 5px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        "
+      >
+        <option value="Asylum">Asylum</option>
+        <option value="The Marcy Case">The Marcy Case</option>
+        <option value="A Prophecy of Dragons">A Prophecy of Dragons</option>
+        <option value="Under the Mask">Under the Mask</option>
+        <option value="Expedition: Endurance">Expedition: Endurance</option>
+        <option value="Lumen Fidei">Lumen Fidei</option>
+        <option value="Estrella Drive">Estrella Drive</option>
+        <option value="Brotherhood of the Coast">
+          Brotherhood of the Coast
+        </option>
+        <option value="Madame">Madame</option>
+      </select>
+      <div class="status-marker-section">
+        <label for="title-type">Titeltyp:</label>
+        <select
+          id="title-type"
+          onchange="updateTitleImage()"
+          style="
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+          "
+        >
+          <option value="Status-Marker" selected>Status-Marker</option>
+          <option value="Ort">Ort</option>
+          <option value="Person">Person</option>
+          <option value="Objekt">Objekt</option>
+          <option value="Ziel">Ziel</option>
+        </select>
+        <label for="title">Titel:</label>
+        <input
+          type="text"
+          id="title"
+          placeholder="Gib hier den Titel ein..."
+          style="
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+          "
+        />
+        <label>Symbol:</label>
+        <div class="marker-images" id="marker-images">
+          <!-- Generate 24 marker images dynamically -->
+          <script>
+            for (let i = 1; i <= 24; i++) {
+              document.write(
+                `<img src="images/marker${i}.png" alt="Marker ${i}" data-marker="marker${i}">`
+              );
+            }
+          </script>
+        </div>
+        <label for="status-notes">Notizen zu ausgewähltem Marker:</label>
+        <textarea
+          id="status-notes"
+          placeholder="Schreibe hier deine Notizen zu diesem Status Marker..."
+        ></textarea>
+      </div>
+      <button onclick="saveNotes()">Notizen Speichern</button>
+      <button onclick="exportScenarioNotes()">Notizen Exportieren</button>
+      <input
+        type="file"
+        id="import-notes"
+        accept=".json"
+        style="display: none"
+        onchange="importNotes(event)"
+      />
+      <button onclick="document.getElementById('import-notes').click()">
+        Notizen Importieren
+      </button>
+    </div>
+    <div class="output" id="output" style="display: none">
+      <h3>Gespeicherte Notizen</h3>
+      <div id="saved-notes"></div>
+    </div>
+    <script>
+      const markerImages = document.querySelectorAll("#marker-images img");
+      let selectedMarker = "";
+      const notesData = [];
+      const titleTypeImages = {
+        Ort: "images/location.png",
+        Person: "images/person.png",
+        Objekt: "images/object.png",
+        Ziel: "images/goal.png",
+        "Status-Marker": "images/marker1.png", // Default image for Status-Marker
+      };
+      document
+        .getElementById("marker-images")
+        .addEventListener("click", (event) => {
+          if (event.target.tagName === "IMG") {
+            markerImages.forEach((marker) =>
+              marker.classList.remove("selected")
+            );
+            event.target.classList.add("selected");
+            selectedMarker = event.target.getAttribute("data-marker");
+          }
+        });
+      window.onload = function () {
+        updateTitleImage();
+      };
+      function updateTitleImage() {
+        const titleType = document.getElementById("title-type").value;
+        const markerDiv = document.getElementById("marker-images");
+        if (titleType === "Status-Marker") {
+          markerDiv.innerHTML = "";
+          for (let i = 1; i <= 24; i++) {
+            const img = document.createElement("img");
+            img.src = `images/marker${i}.png`;
+            img.alt = `Marker ${i}`;
+            img.setAttribute("data-marker", `marker${i}`);
+            img.addEventListener("click", () => {
+              markerImages.forEach((marker) =>
+                marker.classList.remove("selected")
+              );
+              img.classList.add("selected");
+              selectedMarker = img.getAttribute("data-marker");
+            });
+            markerDiv.appendChild(img);
+          }
+        } else {
+          markerDiv.innerHTML = `<img src="${titleTypeImages[titleType]}" alt="${titleType}" style="width: 60px; height: 60px; border-radius: 8px;">`;
+        }
+      }
+      function saveNotes() {
+        const scenarioName = document.getElementById("scenario-name").value;
+        const titleType = document.getElementById("title-type").value;
+        const title = document.getElementById("title").value.trim();
+        const statusNotes = document.getElementById("status-notes").value;
+        if (!scenarioName || !title || !statusNotes) {
+          alert("Bitte fülle alle Felder aus, bevor du speicherst!");
+          return;
+        }
+        const note = {
+          scenario: scenarioName,
+          titleType: titleType,
+          title: title,
+          image: selectedMarker
+            ? `images/${selectedMarker}.png`
+            : titleTypeImages[titleType],
+          notes: statusNotes,
+        };
+        notesData.push(note);
+        displayNotes();
+        // Felder zurücksetzen
+        document.getElementById("title").value = "";
+        document.getElementById("status-notes").value = "";
+        selectedMarker = "";
+        markerImages.forEach((marker) => marker.classList.remove("selected"));
+      }
+      function displayNotes() {
+        const outputDiv = document.getElementById("output");
+        const savedNotes = document.getElementById("saved-notes");
+        savedNotes.innerHTML = "";
+
+        // Notizen nach titleType sortieren
+        notesData.sort((a, b) => {
+          if (a.titleType === "Ziel") return -1;
+          if (b.titleType === "Ziel") return 1;
+          return a.titleType.localeCompare(b.titleType);
+        });
+
+        notesData.forEach((note, index) => {
+          const noteDiv = document.createElement("div");
+          noteDiv.classList.add("saved-note");
+          const markerImg = document.createElement("img");
+          markerImg.src = note.image;
+          markerImg.alt = note.titleType;
+          const noteContent = document.createElement("div");
+          noteContent.innerHTML = `<strong>Szenario:</strong> ${note.scenario}<br>
+ <strong>${note.titleType}:</strong> ${note.title}<br>
+ <strong>Notizen:</strong> ${note.notes}`;
+          const editButton = document.createElement("button");
+          editButton.classList.add("edit-button");
+          editButton.textContent = "Bearbeiten";
+          editButton.onclick = () => editNote(index);
+          const deleteButton = document.createElement("button");
+          deleteButton.classList.add("delete-button");
+          deleteButton.innerHTML = "🗑️"; // Mülleimer-Icon
+          deleteButton.onclick = () => deleteNote(index);
+          noteDiv.appendChild(markerImg);
+          noteDiv.appendChild(noteContent);
+          noteDiv.appendChild(editButton);
+          noteDiv.appendChild(deleteButton);
+          savedNotes.appendChild(noteDiv);
+        });
+        outputDiv.style.display = "block";
+      }
+      function editNote(index) {
+        const note = notesData[index];
+        document.getElementById("scenario-name").value = note.scenario;
+        document.getElementById("title-type").value = note.titleType;
+        document.getElementById("title").value = note.title;
+        document.getElementById("status-notes").value = note.notes;
+        notesData.splice(index, 1);
+        displayNotes();
+      }
+      function exportScenarioNotes() {
+        const scenarioName = document.getElementById("scenario-name").value;
+        const scenarioNotes = notesData.filter(
+          (note) => note.scenario === scenarioName
+        );
+        if (scenarioNotes.length === 0) {
+          alert(`Keine Notizen für das Szenario "${scenarioName}" gefunden!`);
+          return;
+        }
+        const blob = new Blob([JSON.stringify(scenarioNotes, null, 2)], {
+          type: "application/json",
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${scenarioName}.json`; // Benutzer wählt den Speicherort manuell
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+      function deleteNote(index) {
+        notesData.splice(index, 1);
+        displayNotes();
+      }
+
+      function importNotes(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const content = e.target.result;
+          try {
+            const importedNotes = JSON.parse(content);
+            notesData.length = 0;
+            notesData.push(...importedNotes);
+            displayNotes();
+          } catch (err) {
+            alert("Fehler beim Importieren der Notizen: " + err.message);
+          }
+        };
+        reader.readAsText(file);
+      }
+    </script>
+  </body>
+</html>

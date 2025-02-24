@@ -1,0 +1,58 @@
+[
+  {
+    "scenario": "Madame",
+    "titleType": "Ziel",
+    "title": "Ludwig XIV",
+    "image": "images/goal.png",
+    "notes": "Sammelt den temporalen Abdruck von Ludwig XIV"
+  },
+  {
+    "scenario": "Madame",
+    "titleType": "Objekt",
+    "title": "8 (Taschentuch)",
+    "image": "images/object.png",
+    "notes": "Zeigt es Laure de Clerval's Vater in Paris"
+  },
+  {
+    "scenario": "Madame",
+    "titleType": "Ort",
+    "title": "Baustelle",
+    "image": "images/location.png",
+    "notes": "3x Fliege um Karte zu erkunden.\nUnter dem Wagen eingeklemmt -> Objekt 20"
+  },
+  {
+    "scenario": "Madame",
+    "titleType": "Ort",
+    "title": "Königshof",
+    "image": "images/location.png",
+    "notes": "Archivar mit Probe Verstand 3, falls Kreuzsymbol."
+  },
+  {
+    "scenario": "Madame",
+    "titleType": "Ort",
+    "title": "Orangerie",
+    "image": "images/location.png",
+    "notes": "Aufpasser Gift für 4 Geld verkaufen"
+  },
+  {
+    "scenario": "Madame",
+    "titleType": "Ort",
+    "title": "Diana-Salon",
+    "image": "images/location.png",
+    "notes": "Objekte verkaufen: Verjüngungssable 5, Ordenskreuz 10, Audienzbrief 15, Pyramide 3. Königin 20 Geld geben für Objekt 30"
+  },
+  {
+    "scenario": "Madame",
+    "titleType": "Ort",
+    "title": "Vorzimmer des Königs",
+    "image": "images/location.png",
+    "notes": "Audienzbrief für Ort notwendig"
+  },
+  {
+    "scenario": "Madame",
+    "titleType": "Ort",
+    "title": "Park",
+    "image": "images/location.png",
+    "notes": "Quecksilber für verschleierte Dame"
+  }
+]
